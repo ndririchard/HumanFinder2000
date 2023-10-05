@@ -7,32 +7,32 @@ Created on Thu Oct  5 11:07:08 2023
 
 # Import necessary libraries
 from humanFinder2000_utilities import *
-
+import cv2 
 # Load YOLOv8
 # Replace with your YOLOv8 weights and configuration file
-humanDetector1000 = cv2.dnn.readNet("yolov8.weights", "yolov8.cfg")  
+humanDetector1000 = cv2.dnn.readNet("yolov4.weights", "yolov4.cfg")  
 
 # Load COCO class names
 classes = []
 with open("coco.names", "r") as f:  
     classes = f.read().strip().split("\n")
 
-# Load an image
+# Load an RGBimages_resize
 RGBimages = normalize_images(load_images("data/images_rgb"))
 RGBimages_resize = resize_images(RGBimages, (416, 416))
 
-# Get image dimensions
-height, width = image.shape[:2]
+# Get RGBimages_resize dimensions
+height, width = RGBimages_resize.shape[:2]
 
-# Preprocess the image for YOLOv4
-blob = cv2.dnn.blobFromImage(image, 1 / 255.0, (416, 416), swapRB=True, crop=False)
+# Preprocess the RGBimages_resize for YOLOv4
+blob = cv2.dnn.blobFromImage(RGBimages_resize, 1 / 255.0, (416, 416), swapRB=True, crop=False)
 
 # Set the input to the neural network
-net.setInput(RGBimages_resize)
+humanDetector1000.setInput(RGBimages_resize)
 
 # Perform forward pass
-layer_names = net.getUnconnectedOutLayersNames()
-outs = net.forward(layer_names)
+layer_names = humanDetector1000.getUnconnectedOutLayersNames()
+outs = humanDetector1000.forward(layer_names)
 
 # Initialize lists for detected objects
 class_ids = []
@@ -52,7 +52,7 @@ for out in outs:
 
         # Filter detections by confidence score
         if confidence > confidence_threshold:
-            # Scale the bounding box coordinates back to the original image
+            # Scale the bounding box coordinates back to the original RGBimages_resize
             box = detection[0:4] * np.array([width, height, width, height])
             (center_x, center_y, box_width, box_height) = box.astype("int")
 
@@ -74,13 +74,13 @@ for i in indices:
     box = boxes[i]
     x, y, w, h = box
 
-    # Draw the bounding box and label on the image
+    # Draw the bounding box and label on the RGBimages_resize
     color = (0, 255, 0)  # Green
-    cv2.rectangle(image, (x, y), (x + w, y + h), color, 2)
+    cv2.rectangle(RGBimages_resize, (x, y), (x + w, y + h), color, 2)
     label = f"{classes[class_ids[i]]}: {confidences[i]:.2f}"
-    cv2.putText(image, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+    cv2.putText(RGBimages_resize, label, (x, y - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
-# Display the annotated image
-cv2.imshow("Image with Annotations", image)
+# Display the annotated RGBimages_resize
+cv2.imshow("Image with Annotations", RGBimages_resize)
 cv2.waitKey(0)
-cv2.destroyAllWindows()66666
+cv2.destroyAllWindows()

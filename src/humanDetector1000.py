@@ -7,4 +7,4 @@ if __name__ == "__man__":
     
     model = YOLO("model.pt")
     results = model.predict(source=images)
-
+    print(results)

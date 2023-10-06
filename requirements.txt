@@ -1,0 +1,4 @@
+numpy
+imgaug
+ultralytics
+opencv-python

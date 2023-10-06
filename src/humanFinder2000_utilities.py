@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct  5 09:30:03 2023
-
-@author: richardn
-"""
 import os
 import cv2
 import shutil
@@ -115,5 +109,3 @@ def copy_files_with_extension(source_directory, destination_directory, extension
                 print(f"Copied: {source_file} to {destination_file}")
             except Exception as e:
                 print(f"Error copying {source_file}: {str(e)}")
-
-

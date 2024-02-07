@@ -1,6 +1,5 @@
 import os
 from PIL import Image
-
 def search_image_by_name(directory, image_name):
     for root, _, files in os.walk(directory):
         for file in files:
@@ -31,14 +30,15 @@ def get_image_names(directory):
     return image_names
 
 if __name__ == "__main__":
-    directory_path_th0 = r"data\images_th0"  # Replace with the actual directory path
+    directory_path_th0 = r"data\images_th0_test"  # Replace with the actual directory path
     image_names_th0 = get_image_names(directory_path_th0)
-    directory_path_th1 = r"data\images_th1"  # Replace with the actual directory path
+    directory_path_th1 = r"data\images_th1_test"  # Replace with the actual directory path
     image_names_th1 = get_image_names(directory_path_th1)
-    directory_path_depth = r"data\images_depth"  # Replace with the actual directory path
+    directory_path_depth = r"data\images_depth_test"  # Replace with the actual directory path
     image_names_depth = get_image_names(directory_path_th0)
-    directory_path_rgb = r"data\images_rgb"
+    directory_path_rgb = r"data\images_rgb_test"
     image_names_rgb = get_image_names(directory_path_rgb)
+    print(directory_path_th1, root)
     for name in image_names_th1:
         rgb_name = name[0 : 7] + 'rgb8' + name[15 :]
         print(rgb_name)

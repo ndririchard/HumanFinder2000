@@ -1,4 +1,10 @@
 numpy
-imgaug
-ultralytics
+sympy
+matplotlib
+scikit-learn
 opencv-python
+
+ultralytics
+
+
+
